@@ -8,28 +8,31 @@ function updateSubtotal(product) {
   let unitQuantity = quantity.value
   let total = product.querySelector('.subtotal span')
   total.innerHTML = unitPrice * unitQuantity
+  return unitPrice * unitQuantity
 }
 
 function calculateAll() {
-  // code in the following two lines is added just for testing purposes.
-  // it runs when only iteration 1 is completed. at later point, it can be removed.
-  const singleProduct = document.querySelector('.product');
-  updateSubtotal(singleProduct);
-  // end of test
+  /*const singleProduct = document.querySelector('.product');
+  updateSubtotal(singleProduct);*/
+ const allProducts = document.getElementsByClassName ("product")
+ let pricesSum = 0;
+  for (let product of allProducts) {
+    pricesSum += updateSubtotal(product);
+  }
+  const total = document.querySelector("#total-value span");
 
-  // ITERATION 2
-  //... your code goes here
-
-  // ITERATION 3
-  //... your code goes here
+  total.innerHTML = pricesSum;
+  
 }
 
 // ITERATION 4
 
 function removeProduct(event) {
   const target = event.currentTarget;
+  const product = target.parentNode.parentNode
   console.log('The target in remove is:', target);
-  //... your code goes here
+    product.parentNode.removeChild(product);
+  
 }
 
 // ITERATION 5
@@ -41,6 +44,9 @@ function createProduct() {
 window.addEventListener('load', () => {
   const calculatePricesBtn = document.getElementById('calculate');
   calculatePricesBtn.addEventListener('click', calculateAll);
-
-  //... your code goes here
+  const removeButton = document.getElementsByClassName('btn btn-remove');
+  for (let remove of removeButton) {
+    remove.addEventListener("click", removeProduct) 
+  }
+  
 });
